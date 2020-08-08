@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.PersionMapper">
+    <insert id="addPersion" parameterType="Persion">
+        insert into t_persion values (default,#{pName},#{pPwd},#{pTel},#{pAddress},#{pCheck},#{pPhoto},#{pAddtime})
+    </insert>
+
+    <select id="getPersion" resultType="Persion" >
+        select * from t_persion where p_name=#{pName}
+    </select>
+
+    <select id="getAllPersion" resultType="persion">
+        select * from t_persion
+    </select>
+
+    <update id="updateCheck" >
+        update t_persion set p_check='已审核' where p_id=#{pId}
+    </update>
+
+    <select id="getSomePersion" resultType="persion">
+        select * from t_persion limit #{pagenow},2
+    </select>
+
+    <update id="updatePersion"  parameterType="persion">
+        update t_persion set p_pwd=#{pPwd},p_tel=#{pTel},p_address=#{pAddress},p_photo=#{pPhoto} where p_id=#{pId}
+    </update>
+
+    <select id="selectPersion" resultType="persion">
+        select * from t_persion
+        <where>
+            <if test="pName!=null and pName.trim()!=''">
+                and p_name like '%${pName}%'
+            </if>
+            <if test="pTel!=null and pTel.trim()!=''">
+                and p_tel like '%${pTel}%'
+            </if>
+            <if test="pAddress!=null and pAddress.trim()!=''">
+                and p_address like '%${pAddress}%'
+            </if>
+            <if test="pCheck!=null and pCheck.trim()!='' and pCheck!='全部' ">
+                and p_check=#{pCheck}
+            </if>
+        </where>
+        limit #{pagenow},2
+    </select>
+
+    <select id="selectallPersion" resultType="persion">
+        select * from t_persion
+        <where>
+            <if test="pName!=null and pName.trim()!=''">
+                and p_name like '%${pName}%'
+            </if>
+            <if test="pTel!=null and pTel.trim()!=''">
+                and p_tel like '%${pTel}%'
+            </if>
+            <if test="pAddress!=null and pAddress.trim()!=''">
+                and p_address like '%${pAddress}%'
+            </if>
+            <if test="pCheck!=null and pCheck.trim()!='' and pCheck!='全部' ">
+                and p_check=#{pCheck}
+            </if>
+        </where>
+    </select>
+</mapper>
